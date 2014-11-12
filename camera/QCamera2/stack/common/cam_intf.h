@@ -448,7 +448,7 @@ typedef struct {
         DATATYPE member_variable_##PARAM_ID[ COUNT ]
 
 #define POINTER_OF_META(META_ID, TABLE_PTR) \
-        &TABLE_PTR->data.member_variable_##META_ID
+        (void*)&TABLE_PTR->data.member_variable_##META_ID
 
 #define POINTER_OF_PARAM POINTER_OF_META
 

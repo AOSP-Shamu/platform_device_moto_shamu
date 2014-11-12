@@ -52,8 +52,6 @@ using namespace android;
 namespace qcamera {
 static const char ExifAsciiPrefix[] =
     { 0x41, 0x53, 0x43, 0x49, 0x49, 0x0, 0x0, 0x0 };          // "ASCII\0\0\0"
-static const char ExifUndefinedPrefix[] =
-    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };   // "\0\0\0\0\0\0\0\0"
 
 #define EXIF_ASCII_PREFIX_SIZE           8   //(sizeof(ExifAsciiPrefix))
 #define FOCAL_LENGTH_DECIMAL_PRECISION   100
@@ -1219,7 +1217,7 @@ void QCamera3RawDumpChannel::dumpRawSnapshot(mm_camera_buf_def_t *frame)
  * RETURN          : NA
  *==========================================================================*/
 void QCamera3RawDumpChannel::streamCbRoutine(mm_camera_super_buf_t *super_frame,
-                                                QCamera3Stream *stream)
+                                                QCamera3Stream * /*stream*/)
 {
     CDBG("%s: E",__func__);
     if (super_frame == NULL || super_frame->num_bufs != 1) {
@@ -2250,7 +2248,7 @@ int32_t getExifLatitude(rat_t *latitude,
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", value);
-    if(str != NULL) {
+    if(str[0]) {
         parseGPSCoordinate(str, latitude);
 
         //set Latitude Ref
@@ -2285,7 +2283,7 @@ int32_t getExifLongitude(rat_t *longitude,
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", value);
-    if(str != NULL) {
+    if(str[0]) {
         parseGPSCoordinate(str, longitude);
 
         //set Longitude Ref
@@ -2320,7 +2318,7 @@ int32_t getExifAltitude(rat_t *altitude,
 {
     char str[30];
     snprintf(str, sizeof(str), "%f", value);
-    if(str != NULL) {
+    if(str[0]) {
         double value = atof(str);
         *altRef = 0;
         if(value < 0){
@@ -2353,7 +2351,7 @@ int32_t getExifGpsDateTimeStamp(char *gpsDateStamp,
 {
     char str[30];
     snprintf(str, sizeof(str), "%lld", value);
-    if(str != NULL) {
+    if(str[0]) {
         time_t unixTime = (time_t)atol(str);
         struct tm *UTCTimestamp = gmtime(&unixTime);
 

@@ -217,15 +217,15 @@ const QCamera3HardwareInterface::QCameraMap QCamera3HardwareInterface::REFERENCE
 };
 
 camera3_device_ops_t QCamera3HardwareInterface::mCameraOps = {
-    initialize:                         QCamera3HardwareInterface::initialize,
-    configure_streams:                  QCamera3HardwareInterface::configure_streams,
-    register_stream_buffers:            NULL,
-    construct_default_request_settings: QCamera3HardwareInterface::construct_default_request_settings,
-    process_capture_request:            QCamera3HardwareInterface::process_capture_request,
-    get_metadata_vendor_tag_ops:        NULL,
-    dump:                               QCamera3HardwareInterface::dump,
-    flush:                              QCamera3HardwareInterface::flush,
-    reserved:                           {0},
+    .initialize =                         QCamera3HardwareInterface::initialize,
+    .configure_streams =                  QCamera3HardwareInterface::configure_streams,
+    .register_stream_buffers =            NULL,
+    .construct_default_request_settings = QCamera3HardwareInterface::construct_default_request_settings,
+    .process_capture_request =            QCamera3HardwareInterface::process_capture_request,
+    .get_metadata_vendor_tag_ops =        NULL,
+    .dump =                               QCamera3HardwareInterface::dump,
+    .flush =                              QCamera3HardwareInterface::flush,
+    .reserved =                           {0},
 };
 
 /*===========================================================================
@@ -3076,8 +3076,7 @@ QCamera3HardwareInterface::translateFromHalMetadata(
         camMetadata.update(ANDROID_JPEG_THUMBNAIL_QUALITY, thumb_quality, 1);
     }
     if (IS_META_AVAILABLE(CAM_INTF_META_JPEG_THUMB_SIZE, metadata)) {
-        cam_dimension_t *thumb_size = (cam_dimension_t *)POINTER_OF_META(
-                CAM_INTF_META_JPEG_THUMB_SIZE, metadata);
+        (void)POINTER_OF_META(CAM_INTF_META_JPEG_THUMB_SIZE, metadata);
     }
     if (IS_META_AVAILABLE(CAM_INTF_META_PRIVATE_DATA, metadata)) {
         int32_t *privateData = (int32_t *)
@@ -3456,8 +3455,6 @@ void QCamera3HardwareInterface::dumpMetadataToFile(tuning_params_t &meta,
                                                    const char *type,
                                                    uint32_t frameNumber)
 {
-    uint32_t frm_num = 0;
-
     //Some sanity checks
     if (meta.tuning_sensor_data_size > TUNING_SENSOR_DATA_MAX) {
         ALOGE("%s : Tuning sensor data size bigger than expected %d: %d",
@@ -6387,8 +6384,7 @@ int QCamera3HardwareInterface::translateToHalMetadata
         char gps_methods[GPS_PROCESSING_METHOD_SIZE];
         const char *gps_methods_src = (const char *)
                 frame_settings.find(ANDROID_JPEG_GPS_PROCESSING_METHOD).data.u8;
-        uint32_t count = frame_settings.find(
-                ANDROID_JPEG_GPS_PROCESSING_METHOD).count;
+        (void) frame_settings.find(ANDROID_JPEG_GPS_PROCESSING_METHOD).count;
         memset(gps_methods, '\0', sizeof(gps_methods));
         strncpy(gps_methods, gps_methods_src, sizeof(gps_methods)-1);
         rc = AddSetParmEntryToBatch(hal_metadata, CAM_INTF_META_JPEG_GPS_PROC_METHODS, sizeof(gps_methods), gps_methods);
@@ -6791,7 +6787,7 @@ bool QCamera3HardwareInterface::needJpegRotation()
  *==========================================================================*/
 QCamera3ReprocessChannel *QCamera3HardwareInterface::addOfflineReprocChannel(
         const reprocess_config_t &config, QCamera3PicChannel *picChHandle,
-        metadata_buffer_t *metadata)
+        metadata_buffer_t * /*metadata*/)
 {
     int32_t rc = NO_ERROR;
     QCamera3ReprocessChannel *pChannel = NULL;

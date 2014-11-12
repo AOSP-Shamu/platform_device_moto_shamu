@@ -179,8 +179,8 @@ int QCamera2Factory::set_callbacks(const camera_module_callbacks_t *callbacks)
  * RETURN     : 0  -- success
  *              none-zero failure code
  *==========================================================================*/
-int QCamera2Factory::open_legacy(const struct hw_module_t* module,
-            const char* id, uint32_t halVersion, struct hw_device_t** device)
+int QCamera2Factory::open_legacy(const struct hw_module_t* /*module*/,
+            const char* /*id*/, uint32_t /*halVersion*/, struct hw_device_t** /*device*/)
 {
     return -ENOSYS;
 }
@@ -350,7 +350,7 @@ int QCamera2Factory::camera_device_open(
 }
 
 struct hw_module_methods_t QCamera2Factory::mModuleMethods = {
-    open: QCamera2Factory::camera_device_open,
+    .open = QCamera2Factory::camera_device_open,
 };
 
 }; // namespace qcamera
