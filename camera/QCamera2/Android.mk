@@ -4,6 +4,10 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
+# Some private members are not used in .h files.
+LOCAL_CLANG_CFLAGS += \
+        -Wno-unused-private-field
+
 LOCAL_SRC_FILES := \
         util/QCameraCmdThread.cpp \
         util/QCameraQueue.cpp \
