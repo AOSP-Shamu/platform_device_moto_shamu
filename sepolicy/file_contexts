@@ -112,7 +112,6 @@
 /dev/v4l-subdev[0-9]*           u:object_r:video_device:s0
 
 # Persist firmware filesystem
-/persist(/.*)?                  u:object_r:persist_file:s0
 /persist/data(/.*)?             u:object_r:persist_data_file:s0
 /persist/data/tz(/.*)?          u:object_r:persist_drm_file:s0
 /persist/data/sfs(/.*)?         u:object_r:persist_drm_file:s0
