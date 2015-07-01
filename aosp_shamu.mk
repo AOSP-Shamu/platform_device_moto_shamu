@@ -38,3 +38,9 @@ PRODUCT_NAME := aosp_shamu
 PRODUCT_PACKAGES += \
     Launcher3 \
     OTAUpdates
+
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.ota.romname=AOSP-Shamu \
+	ro.ota.version=$(shell date -u +%Y%m%d) \
+	ro.ota.manifest=https://romhut.com/roms/AOSP-Shamu/ota.xml
