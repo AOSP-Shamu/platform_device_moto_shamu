@@ -182,7 +182,4 @@ EXTENDED_FONT_FOOTPRINT := true
 # Enable workaround for slow rom flash
 BOARD_SUPPRESS_SECURE_ERASE := true
 
-# Healthd
-HEALTHD_ENABLE_TRICOLOR_LED := true
-
 -include vendor/moto/shamu/BoardConfigVendor.mk
